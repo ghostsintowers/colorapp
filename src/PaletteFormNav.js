@@ -34,7 +34,6 @@ const styles = (theme) => ({
       duration: theme.transitions.duration.enteringScreen
     })
   },
-
   menuButton: {
     marginLeft: 12,
     marginRight: 20
@@ -54,14 +53,20 @@ class PaletteFormNav extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      newPaletteName: '',
       formShowing: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.showForm = this.showForm.bind(this);
+    this.hideForm = this.hideForm.bind(this);
   }
 
   showForm() {
     this.setState({ formShowing: true });
+  }
+
+  hideForm() {
+    this.setState({ formShowing: false });
   }
 
   handleChange(evt) {
@@ -112,13 +117,22 @@ class PaletteFormNav extends Component {
                 Go Back
               </Button>
             </Link>
-            <Button variant='contained' color='primary' onClick={this.showForm}>
-              Save Palette
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={this.showForm}
+              className={classes.button}
+            >
+              Save
             </Button>
           </div>
         </AppBar>
         {formShowing && (
-          <PaletteMetaForm palettes={palettes} handleSubmit={handleSubmit} />
+          <PaletteMetaForm
+            palettes={palettes}
+            handleSubmit={handleSubmit}
+            hideForm={this.hideForm}
+          />
         )}
       </div>
     );
