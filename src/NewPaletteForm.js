@@ -1,11 +1,8 @@
 // import React, { Component } from 'react';
 import React from 'react';
-import { ChromePicker } from 'react-color';
-// import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,7 +13,7 @@ import Button from '@material-ui/core/Button';
 import { arrayMove } from 'react-sortable-hoc';
 import DraggableColorList from './DraggableColorList';
 import PaletteFormNav from './PaletteFormNav';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import ColorPicker from './ColorPicker';
 
 const drawerWidth = 240;
 
@@ -88,10 +85,8 @@ class PersistentDrawerLeft extends React.Component {
     this.state = {
       open: false,
       colors: this.props.palettes[0].colors,
-      currentColor: '#000000',
-      newColorName: ''
+      currentColor: '#000000'
     };
-    this.updateCurrentColor = this.updateCurrentColor.bind(this);
     this.addNewColor = this.addNewColor.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -105,17 +100,6 @@ class PersistentDrawerLeft extends React.Component {
   //   open: false
   // };
 
-  componentDidMount() {
-    ValidatorForm.addValidationRule('isColorNameUnique', (value) =>
-      this.state.colors.every(
-        ({ name }) => name.toLowerCase() !== value.toLowerCase()
-      )
-    );
-    ValidatorForm.addValidationRule('isColorUnique', (value) =>
-      this.state.colors.every(({ color }) => color !== this.state.currentColor)
-    );
-  }
-
   handleDrawerOpen = () => {
     this.setState({ open: true });
   };
@@ -124,15 +108,7 @@ class PersistentDrawerLeft extends React.Component {
     this.setState({ open: false });
   };
 
-  updateCurrentColor(newColor) {
-    this.setState({ currentColor: newColor.hex });
-  }
-
-  addNewColor() {
-    const newColor = {
-      color: this.state.currentColor,
-      name: this.state.newColorName
-    };
+  addNewColor(newColor) {
     this.setState({ colors: [...this.state.colors, newColor] });
   }
 
@@ -226,35 +202,11 @@ class PersistentDrawerLeft extends React.Component {
               Random Color
             </Button>
           </div>
-
-          <ChromePicker
-            color={this.state.currentColor}
-            onChangeComplete={this.updateCurrentColor}
+          <ColorPicker
+            paletteFull={paletteFull}
+            addNewColor={this.addNewColor}
+            colors={colors}
           />
-          <ValidatorForm instantValidate={false} onSubmit={this.addNewColor}>
-            <TextValidator
-              value={this.state.newColorName}
-              name='newColorName'
-              onChange={this.handleChange}
-              validators={['required', 'isColorNameUnique', 'isColorUnique']}
-              errorMessages={[
-                'this field is required',
-                'color name is taken',
-                'color already used'
-              ]}
-            />
-            <Button
-              variant='contained'
-              color='primary'
-              type='submit'
-              style={{
-                backgroundColor: paletteFull ? 'grey' : this.state.currentColor
-              }}
-              disabled={paletteFull}
-            >
-              {paletteFull ? 'Palette Full' : 'Add Color'}
-            </Button>
-          </ValidatorForm>
         </Drawer>
         <main
           className={classNames(classes.content, {
