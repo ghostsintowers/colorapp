@@ -30,7 +30,9 @@ const styles = (theme) => ({
     flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    display: 'flex',
+    alignItems: 'center'
   },
   drawerHeader: {
     display: 'flex',
@@ -56,6 +58,19 @@ const styles = (theme) => ({
       duration: theme.transitions.duration.enteringScreen
     }),
     marginLeft: 0
+  },
+  drawerContainer: {
+    width: '90%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttons: {
+    width: '100%'
+  },
+  button: {
+    width: '50%'
   }
 });
 
@@ -166,29 +181,35 @@ class PersistentDrawerLeft extends React.Component {
             </IconButton>
           </div>
           <Divider />
-          <Typography variant='h4'>Design Your Palette</Typography>
-          <div>
-            <Button
-              variant='contained'
-              color='secondary'
-              onClick={this.clearColors}
-            >
-              Clear Palette
-            </Button>
-            <Button
-              variant='contained'
-              color='primary'
-              onClick={this.getRandomColor}
-              disabled={paletteFull}
-            >
-              Random Color
-            </Button>
+          <div className={classes.drawerContainer}>
+            <Typography variant='h4' gutterBottom>
+              Design Your Palette
+            </Typography>
+            <div className={classes.buttons}>
+              <Button
+                variant='contained'
+                color='secondary'
+                onClick={this.clearColors}
+                className={classes.button}
+              >
+                Clear Palette
+              </Button>
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={this.getRandomColor}
+                disabled={paletteFull}
+                className={classes.button}
+              >
+                Random Color
+              </Button>
+            </div>
+            <ColorPicker
+              paletteFull={paletteFull}
+              addNewColor={this.addNewColor}
+              colors={colors}
+            />
           </div>
-          <ColorPicker
-            paletteFull={paletteFull}
-            addNewColor={this.addNewColor}
-            colors={colors}
-          />
         </Drawer>
         <main
           className={classNames(classes.content, {

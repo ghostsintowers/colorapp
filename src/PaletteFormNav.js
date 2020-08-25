@@ -85,7 +85,7 @@ class PaletteFormNav extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant='h6' color='inherit' noWrap>
-              Persistent drawer
+              Create a Palette
             </Typography>
           </Toolbar>
           <div className={classes.buttons}>
