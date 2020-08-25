@@ -4,10 +4,6 @@ const styles = (theme) => ({
   root: {
     display: 'flex'
   },
-
-  hide: {
-    display: 'none'
-  },
   drawer: {
     width: drawerWidth,
     flexShrink: 0
