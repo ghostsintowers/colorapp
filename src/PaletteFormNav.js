@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 const drawerWidth = 400;
 
@@ -24,7 +23,8 @@ const styles = (theme) => ({
       duration: theme.transitions.duration.leavingScreen
     }),
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -38,14 +38,30 @@ const styles = (theme) => ({
   menuButton: {
     marginLeft: 12,
     marginRight: 20
+  },
+  navButtons: {
+    marginRight: '1rem'
+  },
+  button: {
+    margin: '0 .5rem'
+  },
+  link: {
+    textDecoration: 'none'
   }
 });
 
 class PaletteFormNav extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      formShowing: false
+    };
     this.handleChange = this.handleChange.bind(this);
+    this.showForm = this.showForm.bind(this);
+  }
+
+  showForm() {
+    this.setState({ formShowing: true });
   }
 
   handleChange(evt) {
@@ -60,7 +76,8 @@ class PaletteFormNav extends Component {
       palettes,
       handleSubmit
     } = this.props;
-    const { newPaletteName } = this.state;
+
+    const { formShowing } = this.state;
 
     return (
       <div className={classes.root}>
@@ -85,9 +102,8 @@ class PaletteFormNav extends Component {
               Create a Palette
             </Typography>
           </Toolbar>
-          <div className={classes.buttons}>
-            <PaletteMetaForm palettes={palettes} handleSubmit={handleSubmit} />
-            <Link to='/'>
+          <div className={classes.navButtons}>
+            <Link to='/' className={classes.link}>
               <Button
                 variant='contained'
                 color='secondary'
@@ -96,8 +112,14 @@ class PaletteFormNav extends Component {
                 Go Back
               </Button>
             </Link>
+            <Button variant='contained' color='primary' onClick={this.showForm}>
+              Save Palette
+            </Button>
           </div>
         </AppBar>
+        {formShowing && (
+          <PaletteMetaForm palettes={palettes} handleSubmit={handleSubmit} />
+        )}
       </div>
     );
   }
