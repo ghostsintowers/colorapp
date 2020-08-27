@@ -20,7 +20,7 @@ class MiniPalette extends Component {
       <div
         className={classes.miniColor}
         style={{ backgroundColor: color.color }}
-        key={color.hex}
+        key={color.name}
       ></div>
     ));
 
