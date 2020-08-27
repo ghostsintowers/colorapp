@@ -2,11 +2,16 @@ export default {
   root: {
     backgroundColor: 'white',
     borderRadius: '5px',
-    border: 'solid black',
+    border: '1px solid #555',
     padding: '0.5em',
     position: 'relative',
     overflow: 'hidden',
     cursor: 'point',
+    opacity: '.9',
+    transition: 'all .3s ease-in',
+    '&:hover': {
+      opacity: '1'
+    },
     '&:hover svg': {
       opacity: '1'
     }
