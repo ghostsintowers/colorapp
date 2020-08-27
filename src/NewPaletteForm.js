@@ -159,6 +159,7 @@ class PersistentDrawerLeft extends React.Component {
             deleteColor={this.deleteColor}
             axis='xy'
             onSortEnd={this.onSortEnd}
+            distance={20}
           />
         </main>
       </div>
