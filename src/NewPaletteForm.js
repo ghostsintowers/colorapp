@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import DraggableColorList from './DraggableColorList';
 import PaletteFormNav from './PaletteFormNav';
 import ColorPicker from './ColorPicker';
+import seedColors from './seedColors';
 import styles from './styles/NewPaletteFormStyles';
 
 class PersistentDrawerLeft extends React.Component {
@@ -22,7 +23,7 @@ class PersistentDrawerLeft extends React.Component {
     super(props);
     this.state = {
       open: false,
-      colors: this.props.palettes[0].colors,
+      colors: seedColors[0].colors,
       currentColor: '#000000'
     };
     this.addNewColor = this.addNewColor.bind(this);
@@ -62,9 +63,16 @@ class PersistentDrawerLeft extends React.Component {
 
   getRandomColor() {
     const allColors = this.props.palettes.map((p) => p.colors).flat();
-    var rand = Math.floor(Math.random() * allColors.length);
-    const randomColor = allColors[rand];
-
+    let rand;
+    let randomColor;
+    let colorIsDuplicate = true;
+    while (colorIsDuplicate) {
+      rand = Math.floor(Math.random() * allColors.length);
+      randomColor = allColors[rand];
+      colorIsDuplicate = this.state.colors.some(
+        (color) => color.name === randomColor.name
+      );
+    }
     this.setState({ colors: [...this.state.colors, randomColor] });
   }
 
