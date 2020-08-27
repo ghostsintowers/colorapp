@@ -20,8 +20,7 @@ class MiniPalette extends PureComponent {
   }
 
   render() {
-    const { classes, paletteName, emoji, colors, handleClick, id } = this.props; // no this because it is a functional companent, not a class component (no longer the case)
-    console.log('RENDERING ' + paletteName);
+    const { classes, paletteName, emoji, colors } = this.props; // no this because it is a functional companent, not a class component (no longer the case)
     const miniColorBoxes = colors.map((color) => (
       <div
         className={classes.miniColor}
