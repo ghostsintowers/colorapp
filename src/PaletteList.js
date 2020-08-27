@@ -26,6 +26,7 @@ class PaletteList extends Component {
     this.openDialog = this.openDialog.bind(this);
     this.closeDialog = this.closeDialog.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.goToPalette = this.goToPalette.bind(this);
   }
 
   openDialog(paletteId) {
@@ -46,8 +47,8 @@ class PaletteList extends Component {
   }
 
   render() {
-    const { palettes, classes, deletePalette } = this.props;
-    const { deleteDialogOpen, deletingId } = this.state;
+    const { palettes, classes } = this.props;
+    const { deleteDialogOpen } = this.state;
 
     return (
       <div className={classes.root}>
@@ -63,7 +64,8 @@ class PaletteList extends Component {
                   {...palette}
                   key={palette.id}
                   id={palette.id}
-                  handleClick={() => this.goToPalette(palette.id)}
+                  // when using an arrow function in render, when an update happens, it re-renders everything every time
+                  goToPalette={this.goToPalette}
                   // handleDelete={deletePalette}
                   openDialog={this.openDialog}
                 />
